@@ -5,42 +5,36 @@ pipeline {
     stages {
         stage('clean') {
             steps {
+                echo 'cleaning'
                 bat 'mvn clean'
-            }
-        }
-
-        stage('validate') {
-            steps {
-                bat 'mvn validate'
-            }
-        }
-
-        stage('compile') {
-            steps {
-                bat 'mvn compile'
             }
         }
 
         stage('test') {
             steps {
+                echo 'testing'
                 bat 'mvn test'
             }
         }
 
         stage('package') {
             steps {
+                echo 'packaging'
                 bat 'mvn package'
             }
         }
 
-        stage('install') {
+
+        stage('build') {
             steps {
+                echo 'bulding'
                 bat 'mvn install'
             }
         }
- stage('deploy-to-tomcat') {
+        stage('deploy-to-tomcat') {
             steps {
-deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: '252cc296-5386-46e0-be56-4c87bf0ed5f7', path: '', url: 'http://localhost:8080/')], contextPath: null, war: '**/*.war'
+                 echo 'deploying'
+                 deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: '252cc296-5386-46e0-be56-4c87bf0ed5f7', path: '', url: 'http://localhost:8080/')], contextPath: null, war: '**/*.war'
 }                  
     }
 }
